@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # code by 1904521507
-import Queue
+import queue
 import threading
 from threading import Thread
 import time
@@ -10,7 +10,6 @@ import sys
 import os
 import socket
 import optparse
-import urllib2
 
 '''
 一般默认常用端口扫描介绍：
@@ -76,9 +75,9 @@ def num2ip(num):
 def bThread():
     global queue
     global SETTHREAD
-    print '[Note] Running...\n'
+    print('[Note] Running...\n')
     threadl = []
-    threadl = [tThread(queue) for x in xrange(0, int(SETTHREAD))]
+    threadl = [tThread(queue) for x in range(0, int(SETTHREAD))]
     for t in threadl:
         t.start()
     for t in threadl:
@@ -105,7 +104,7 @@ def scan_open_port_server():
         try:
             ss.connect((host,port))
             lock.acquire()
-            print "%s 开放端口 %s   %s" % (host, port,PORT[port])
+            print("%s 开放端口 %s   %s" % (host, port,PORT[port]))
             lock.release()
             ss.close()
         except:
@@ -135,10 +134,10 @@ if __name__ == '__main__':
     #程序运行时间
     PORT={80:"web",8080:"web",3311:"kangle主机管理系统",3312:"kangle主机管理系统",3389:"远程登录",4440:"rundeck是用java写的开源工具",5672:"rabbitMQ",5900:"vnc",6082:"varnish",7001:"weblogic",8161:"activeMQ",8649:"ganglia",9000:"fastcgi",9090:"ibm",9200:"elasticsearch",9300:"elasticsearch",9999:"amg",10050:"zabbix",11211:"memcache",27017:"mongodb",28017:"mondodb",3777:"大华监控设备",50000:"sap netweaver",50060:"hadoop",50070:"hadoop",21:"ftp",22:"ssh",23:"telnet",25:"smtp",53:"dns",123:"ntp",161:"snmp",8161:"snmp",162:"snmp",389:"ldap",443:"ssl",512:"rlogin",513:"rlogin",873:"rsync",1433:"mssql",1080:"socks",1521:"oracle",1900:"bes",2049:"nfs",2601:"zebra",2604:"zebra",2082:"cpanle",2083:"cpanle",3128:"squid",3312:"squid",3306:"mysql",4899:"radmin",8834:'nessus',4848:'glashfish'}
     starttime=time.time()
-    queue = Queue.Queue()
+    queue = queue.Queue()
     iplist = ip_range(startIp, endIp)
-    print '端口采用默认扫描请自行进行比对:\nbegin Scan '+str(len(iplist))+" ip..."
-    for i in xrange(SETTHREAD):
+    print('端口采用默认扫描请自行进行比对:\nbegin Scan '+str(len(iplist))+" ip...")
+    for i in range(SETTHREAD):
         st1 = threading.Thread(target=scan_open_port_server)
         st1.setDaemon(True)
         st1.start()
@@ -146,4 +145,4 @@ if __name__ == '__main__':
         for port in PORT.keys():
             queue.put((host,port))
     queue.join()
-    print 'All RUN TIME：'+str(time.time()-starttime)
+    print('All RUN TIME：'+str(time.time()-starttime))
